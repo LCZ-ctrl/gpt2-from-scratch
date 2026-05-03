@@ -102,5 +102,7 @@ Task input (if necessary, press 'Enter' to skip): I will atend the meeting tomor
 Model response: I will attend the meeting tomorrow.
 ```
 
-<br><br>
 <em><strong>My fine-tuned weight:</strong></em> [GPT_XL](https://huggingface.co/LCZ-ctrl/LLMs-finetuned)
+
+## Acknowledgement
+This repo is inspired by [LLMs-from-scratch](https://github.com/rasbt/LLMs-from-scratch). Thanks for the excellent works.
