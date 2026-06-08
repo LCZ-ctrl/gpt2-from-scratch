@@ -1,3 +1,4 @@
+# GPT-2 model configuration
 GPT_SMALL = {
     "vocab_size": 50257,  # vocabulary size
     "context_length": 1024,  # context length

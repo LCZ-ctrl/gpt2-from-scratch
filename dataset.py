@@ -17,7 +17,7 @@ def token_ids_to_text(token_ids, tokenizer):
     return text  # shape: [n_tokens,]
 
 
-class GPTDatasetV1(Dataset):
+class GPTDataset(Dataset):
     def __init__(self, txt, tokenizer, max_length, stride):
         self.input_ids = []
         self.target_ids = []
@@ -40,13 +40,13 @@ class GPTDatasetV1(Dataset):
         return self.input_ids[idx], self.target_ids[idx]
 
 
-def create_dataloader_v1(txt, batch_size=4, max_length=256,
+def create_dataloader(txt, batch_size=4, max_length=256,
                          stride=128, shuffle=True, drop_last=True, num_workers=0):
     # Initialize the tokenizer
     tokenizer = tiktoken.get_encoding("gpt2")
 
     # Create dataset
-    dataset = GPTDatasetV1(txt, tokenizer, max_length, stride)
+    dataset = GPTDataset(txt, tokenizer, max_length, stride)
 
     # Create dataloader
     dataloader = DataLoader(
@@ -113,7 +113,7 @@ def custom_collate_fn(
     for instruction_length, item in batch:
         new_item = item.copy()
         # Add an <|endoftext|> token
-        new_item += [pad_token_id]
+        new_item += [eos_token_id]
         # Pad sequences to max_length
         padded = new_item + [pad_token_id] * (batch_max_length - len(new_item))
         # Truncate the last token for inputs

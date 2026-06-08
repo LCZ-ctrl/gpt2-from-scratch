@@ -1,14 +1,13 @@
 import sys
-import json
 from pathlib import Path
 import tiktoken
 import torch
 
-from config import GPT_SMALL, GPT_MEDIUM, GPT_LARGE, GPT_XL
+from config import *
 from gpt import GPTModel
 from generate import generate_text
 from dataset import format_input, text_to_token_ids, token_ids_to_text
-from instruction_finetune import LoRALayer, LinearWithLoRA, replace_linear_with_lora
+from instruction_finetune import replace_linear_with_lora
 
 
 def main(gpt_config, model_path, rank, alpha):
@@ -30,7 +29,7 @@ def main(gpt_config, model_path, rank, alpha):
     # Interactive conversation loop
     while True:
         # Instruction input
-        instruction = input("📌 Instruction: ").strip()
+        instruction = input("‍🧑‍💻 Instruction: ").strip()
         if instruction.lower() == "exit":
             break
         if not instruction:
@@ -38,7 +37,7 @@ def main(gpt_config, model_path, rank, alpha):
             continue
 
         # Optional extra input
-        extra_input = input("📎 Task input (if necessary, press 'Enter' to skip): ").strip()
+        extra_input = input("📌 Task input (if necessary, press 'Enter' to skip): ").strip()
         entry = {"instruction": instruction, "input": extra_input if extra_input else None, "output": ""}
         input_text = format_input(entry)
         full_prompt = f"{input_text}\n<|assistant|>\n"

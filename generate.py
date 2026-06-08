@@ -1,7 +1,7 @@
 import torch
 import tiktoken
 
-from config import GPT_SMALL, GPT_MEDIUM, GPT_LARGE, GPT_XL
+from config import *
 from gpt import GPTModel
 from download import download_and_load_gpt2, load_weights_into_gpt
 from dataset import text_to_token_ids, token_ids_to_text
@@ -67,7 +67,7 @@ def main(gpt_config, input_prompt):
         model=model,
         device=device,
         idx=text_to_token_ids(input_prompt, tokenizer),
-        max_new_tokens=30,
+        max_new_tokens=50,
         context_size=gpt_config["context_length"],
         top_k=5,
         temperature=0.8,

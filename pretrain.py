@@ -6,8 +6,8 @@ from pathlib import Path
 from torch.nn.functional import cross_entropy
 from torch.amp import autocast, GradScaler
 
-from config import GPT_SMALL, GPT_MEDIUM, GPT_LARGE, GPT_XL
-from dataset import text_to_token_ids, token_ids_to_text, create_dataloader_v1
+from config import *
+from dataset import text_to_token_ids, token_ids_to_text, create_dataloader
 from gpt import GPTModel
 from generate import generate_text
 
@@ -139,7 +139,7 @@ def main(gpt_config, settings, data_path="data/the-verdict.txt"):
     train_ratio = 0.90
     split_idx = int(train_ratio * len(text_data))
 
-    train_loader = create_dataloader_v1(
+    train_loader = create_dataloader(
         text_data[:split_idx],
         batch_size=settings["batch_size"],
         max_length=256,
@@ -149,7 +149,7 @@ def main(gpt_config, settings, data_path="data/the-verdict.txt"):
         num_workers=settings["num_workers"]
     )
 
-    val_loader = create_dataloader_v1(
+    val_loader = create_dataloader(
         text_data[split_idx:],
         batch_size=settings["batch_size"],
         max_length=256,

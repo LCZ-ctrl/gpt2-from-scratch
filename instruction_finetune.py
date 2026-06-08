@@ -11,8 +11,8 @@ from tqdm import tqdm
 from torch.nn.functional import cross_entropy
 from torch.amp import autocast, GradScaler
 
-from config import GPT_SMALL, GPT_MEDIUM, GPT_LARGE, GPT_XL
-from dataset import InstructionDataset, format_input, custom_collate_fn
+from config import *
+from dataset import InstructionDataset, custom_collate_fn
 from gpt import GPTModel
 from download import download_and_load_gpt2, load_weights_into_gpt
 
