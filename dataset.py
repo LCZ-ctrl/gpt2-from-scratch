@@ -99,7 +99,7 @@ class InstructionDataset(Dataset):
 
 def custom_collate_fn(
         batch,
-        pad_token_id=50256,
+        pad_token_id=50256,  # the same as eos token
         ignore_index=-100,
         allowed_max_length=None,
         device="cpu"
@@ -113,7 +113,7 @@ def custom_collate_fn(
     for instruction_length, item in batch:
         new_item = item.copy()
         # Add an <|endoftext|> token
-        new_item += [eos_token_id]
+        new_item += [pad_token_id]
         # Pad sequences to max_length
         padded = new_item + [pad_token_id] * (batch_max_length - len(new_item))
         # Truncate the last token for inputs
