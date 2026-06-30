@@ -195,7 +195,8 @@ def main(gpt_config, settings, data_path="data/alpaca_gpt4_data.json"):
     # ========== Fine-tuning the model ==========
     start_time = time.time()
     optimizer = torch.optim.AdamW(
-        model.parameters(), lr=settings["learning_rate"], weight_decay=settings["weight_decay"]
+        [p for p in model.parameters() if p.requires_grad],
+        lr=settings["learning_rate"], weight_decay=settings["weight_decay"]
     )
 
     train_losses, val_losses = finetune_model_simple(

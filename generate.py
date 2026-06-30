@@ -13,7 +13,7 @@ def generate_text(model, device, idx, max_new_tokens, context_size, temperature=
 
     # Get logits, and only focus on last time step
     for _ in range(max_new_tokens):
-        idx_cond = idx[:, -context_size:].to(device)
+        idx_cond = idx[:, -context_size:]
         with torch.no_grad():
             logits = model(idx_cond)  # shape: [batch_size, seq_len, vocab_size]
         logits = logits[:, -1, :]  # shape: [batch_size, vocab_size]
@@ -24,11 +24,7 @@ def generate_text(model, device, idx, max_new_tokens, context_size, temperature=
             top_logits, top_indices = torch.topk(logits, top_k)  # [batch_size, top_k]
             min_val = top_logits[:, -1]
             # Mask logits smaller than the k-th largest value
-            logits = torch.where(
-                logits < min_val,
-                torch.tensor(float('-inf')).to(device),
-                logits
-            )
+            logits = torch.where(logits < min_val, float('-inf'), logits)
 
         # Apply temperature scaling
         if temperature > 0.0:

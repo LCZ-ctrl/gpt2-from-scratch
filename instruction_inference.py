@@ -51,7 +51,7 @@ def main(gpt_config, model_path, rank, alpha):
                 device=device,
                 idx=input_ids,
                 max_new_tokens=512,
-                context_size=1024,
+                context_size=gpt_config["context_length"],
                 temperature=0.8,
                 top_k=5,
                 eos_id=50256
